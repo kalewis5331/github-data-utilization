@@ -15,7 +15,6 @@ def create_color_labels(languages: [str]):
     with open("static/colors.json", "r") as file:
         colors = json.load(file)
     labels = []
-    print(languages)
     for language in languages:
         if language in colors:
             labels.append(colors[language]['color'])
@@ -43,17 +42,18 @@ async def create_bar_chart():
         total_items = len(df)
         df_count = df.groupby('language').size().reset_index(name='count')
         df_count['percentage'] = (df_count['count'] / total_items) * 100
-        plt.figure()
         language_column = df_count['language']
         labels = create_color_labels(language_column)
-        plt.bar(df_count['language'], df_count['percentage'], color=labels)
-        plt.xlabel('Language')
-        plt.ylabel('% of Languages Used')
-        plt.title('Occurrences of Repository Languages')
-        plt.yticks(np.arange(0, max(df_count['percentage']) + 25, 5))
+        fig, ax = plt.subplots()
+        ax.bar(df_count['language'], df_count['percentage'], color=labels)
+        ax.set_xlabel('Language')
+        ax.set_ylabel('% of Languages Used')
+        ax.set_title('Occurrences of Repository Languages')
+        ax.set_yticks(np.arange(0, max(df_count['percentage']) + 25, 5))
         # # Show plot
-        # plt.show()
+        # ax.show()
         plt.savefig('./static/images/new_plot.png')
+        plt.close(fig)
     else:
         print(r.raise_for_status())
 
