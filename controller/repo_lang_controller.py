@@ -1,14 +1,31 @@
 import httpx
 import numpy as np
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 import pandas as pd
 import matplotlib.pyplot as plt
+import json
 
 router = APIRouter(prefix="/languages", tags=["language", "github"])
+templates = Jinja2Templates(directory="templates")
 
 
-@router.get("/")
-async def languages_chart():
+def create_color_labels(languages: [str]):
+    with open("static/colors.json", "r") as file:
+        colors = json.load(file)
+    labels = []
+    print(languages)
+    for language in languages:
+        if language in colors:
+            labels.append(colors[language]['color'])
+        else:
+            labels.append('grey')
+
+    return labels
+
+
+async def create_bar_chart():
     query = """
   {
     repos {
@@ -21,26 +38,27 @@ async def languages_chart():
     status = r.status_code
     if status == 200:
         data = r.json()["data"]
-        print(data["repos"])
-        df = pd.DataFrame(data["repos"])
-        df_summed = df.groupby('language').size().reset_index(name='count')
-        df_summed['count'] = df_summed['count']
-        plt.bar(df_summed['language'], df_summed['count'])
+        repos = data["repos"]
+        df = pd.DataFrame(repos)
+        total_items = len(df)
+        df_count = df.groupby('language').size().reset_index(name='count')
+        df_count['percentage'] = (df_count['count'] / total_items) * 100
+        plt.figure()
+        language_column = df_count['language']
+        labels = create_color_labels(language_column)
+        plt.bar(df_count['language'], df_count['percentage'], color=labels)
         plt.xlabel('Language')
-        plt.ylabel('Count')
+        plt.ylabel('% of Languages Used')
         plt.title('Occurrences of Repository Languages')
-        plt.yticks(np.arange(min(df_summed['count']), max(df_summed['count'])+1, 1.0))
-
-        # Show plot
-        plt.show()
+        plt.yticks(np.arange(0, max(df_count['percentage']) + 25, 5))
+        # # Show plot
+        # plt.show()
         plt.savefig('./static/images/new_plot.png')
-
-        return data["repos"]
     else:
-        r.raise_for_status()
-        return {"data": []}
+        print(r.raise_for_status())
 
 
-@router.get("/overtime")
-async def get_languages_overtime():
-    return {"message": "Languages Here!"}
+@router.get("/", response_class=HTMLResponse)
+async def languages_chart(request: Request):
+    await create_bar_chart()
+    return templates.TemplateResponse(request=request, name="language.html")
