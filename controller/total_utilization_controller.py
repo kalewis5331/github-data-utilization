@@ -57,7 +57,7 @@ async def create_multi_bar_chart(repo_id: int):
             # Add labels with values above each bar
             for bar in bars:
                 height = bar.get_height()
-                plt.text(bar.get_x() + bar.get_width() / 2, height, '{:.3f}'.format(height), ha='center', va='bottom')
+                plt.text(bar.get_x() + bar.get_width() / 2, height, '{:.3f}%'.format(height), ha='center', va='bottom')
 
             # Show plot
             # plt.show()
