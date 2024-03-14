@@ -13,4 +13,4 @@ app.include_router(total_utilization_controller.router)
 @app.get("/")
 async def root(request: Request):
     await repo_lang_controller.create_bar_chart()
-    return templates.TemplateResponse(request=request, name="base.html")
+    return templates.TemplateResponse(request=request, name="home.html")

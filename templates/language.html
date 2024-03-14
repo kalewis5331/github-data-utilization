@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Language Usage</title>
-</head>
-<body>
-<img src="{{ url_for('static', path='images/new_plot.png') }}" alt="Example Image">
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Languages Used{% endblock %}
+
+{% block content %}
+    <div style="text-align: center">
+        <img src="{{ url_for('static', path='images/new_plot.png') }}" alt="Example Image">
+    </div>
+
+{% endblock %}
