@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib import ticker
 import json
 
 router = APIRouter(prefix="/languages", tags=["language", "github"])
@@ -45,11 +46,17 @@ async def create_bar_chart():
         language_column = df_count['language']
         labels = create_color_labels(language_column)
         fig, ax = plt.subplots()
-        ax.bar(df_count['language'], df_count['percentage'], color=labels)
+        bars = ax.bar(df_count['language'], df_count['percentage'], label='ssss', color=labels)
         ax.set_xlabel('Language')
         ax.set_ylabel('% of Languages Used')
-        ax.set_title('Occurrences of Repository Languages')
-        ax.set_yticks(np.arange(0, max(df_count['percentage']) + 25, 5))
+        ax.set_title('Total Primary Language Usage')
+        ax.set_yticks(np.linspace(0, 100, 5))
+        ax.yaxis.set_major_formatter(ticker.PercentFormatter())
+
+        for bar in bars:
+            height = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width() / 2, height, '{:.1f}%'.format(height), ha='center', va='bottom')
+
         # # Show plot
         # ax.show()
         plt.savefig('./static/images/new_plot.png')

@@ -1,13 +1,143 @@
-<!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
-<link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
-<nav>
-    <h1>FastAPI</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <style>
+        /* Additional inline styles can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-</nav>
-<section class="content">
-    <header>
-        {% block header %}{% endblock %}
-    </header>
-    {% block content %}{% endblock %}
-</section>
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 20px 20px;
+        }
+
+        .project-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .project {
+            margin-bottom: 50px;
+        }
+
+        .project p {
+            text-align: left;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to my Python Website</h1>
+</header>
+<div class="container">
+    <h2>About Us</h2>
+    <p>I'm Kevin, a Lead Developer with 10 years of extensive experience developing and maintaining
+        web applications using modern technologies
+        such as React, Typescript, Node.js, MongoDB, PostgresQL, Docker, and Amazon Web Services. </p>
+    <p>The goal of this project was to learn Python and leverage a few commonly used resources/libraries.</p>
+    <h4>Resources Learned/Used:</h4>
+    <ul>
+        <li><a href="https://www.python.org/" target="_blank" rel="noopener noreferrer">Python</a></li>
+        <li><a href="https://numpy.org/" target="_blank" rel="noopener noreferrer">Numpy</a></li>
+        <li><a href="https://pandas.pydata.org/docs/index.html" target="_blank" rel="noopener noreferrer">Pandas</a>
+        </li>
+        <li><a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">FastAPI</a></li>
+        <li><a href="https://matplotlib.org/stable/" target="_blank" rel="noopener noreferrer">Matplotlib</a></li>
+    </ul>
+    <h2 style="margin-top: 50px; text-align: center">Python Projects</h2>
+    <div class="project-container">
+        <div class="project">
+            <h3>Graph 1: Total Primary Language Usage</h3>
+            <p>In the Matplotlib Bar graph provided, the total utilization of coding languages throughout GitHub <a
+                    href="https://github.com/kalewis5331"
+                    target="_blank" rel="noopener noreferrer">Repositories</a> is
+                visualized.
+                Each bar represents the total percentage of a specific language, with the height of the bar
+                indicating the relative magnitude of usage.
+                From the graph, we can observe that Java has the highest usage, followed by JavaScript. This
+                visualization enables hiring managers, recruiters, and developers to quickly grasp
+                the comparative usage of different
+                coding languages and identify areas for further analysis or improvement.</p>
+            <p><b>Note:</b> Private Repos from prior work experience would have significantly altered the data, placing
+                TypeScript as the highest language due to the sheer amount of coding done in that language.
+            </p>
+            <p><b>Note: </b>Figure below only shows the Primary Languages per Repository, and does not show
+                secondary/additional languages used.
+            </p>
+            <img src="{{ url_for('static', path='images/new_plot.png') }}" alt="Bar Graph">
+        </div>
+        <div class="project">
+            <h3>Graph 2: Percentage of Languages Used (per Repo)</h3>
+            <p> Matplotlib multi-bar graph based on the languages used for a Repository.</p>
+            <p>In the Matplotlib Multi Bar graph provided, the total utilization of coding languages throughout an
+                individual Repository is
+                visualized.
+                Each bar represents the total percentage of a specific language, with the height of the bar
+                indicating the relative magnitude of usage.
+                From the graph, we can observe that Vue has the highest usage, followed by TypeScript. This
+                visualization enables hiring managers, recruiters, and developers to quickly grasp
+                the comparative usage of different coding languages and identify areas for further analysis or
+                improvement.</p>
+            <p><b>Note: </b>According to the team behind <a
+                    href="https://vuejs.org/guide/introduction.html"
+                    target="_blank" rel="noopener noreferrer">Vue</a>, Vue is a JavaScript framework that builds on top
+                of
+                standard HTML, CSS, and JavaScript. GitHub's API classifies it as a Language.
+            </p>
+            <img src="{{ url_for('static', path='images/bar.png') }}" alt="Multi Bar Graph">
+        </div>
+        <!-- Add more projects as needed -->
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024. Python & FastAPI Projects. Developed by Kalewis5331</p>
+</footer>
+</body>
+</html>

@@ -1,12 +1,10 @@
 import io
 import httpx
 from fastapi import APIRouter, Request, Response
-from fastapi.templating import Jinja2Templates
 import matplotlib.pyplot as plt
 import json
 
 router = APIRouter(prefix="/repository", tags=["repository", "github"])
-templates = Jinja2Templates(directory="templates")
 
 
 def create_color_labels(languages: [str]):
@@ -27,7 +25,6 @@ async def create_multi_bar_chart(repo_id: int):
   {
     repos {
         id
-        language
         languages_url
     }
   }
@@ -65,6 +62,7 @@ async def create_multi_bar_chart(repo_id: int):
             # Show plot
             # plt.show()
             # plt.savefig('./static/images/bar.png')
+
             # Convert the plot to a PNG image
             buffer = io.BytesIO()
             plt.savefig(buffer, format='png')
@@ -79,6 +77,6 @@ async def create_multi_bar_chart(repo_id: int):
 
 @router.get("/{repo_id}")
 async def languages_chart(request: Request, repo_id: int):
-    b = await create_multi_bar_chart(repo_id)
+    buffer = await create_multi_bar_chart(repo_id)
     # Return the PNG image as a response
-    return Response(content=b.getvalue(), media_type='image/png')
+    return Response(content=buffer.getvalue(), media_type='image/png')
