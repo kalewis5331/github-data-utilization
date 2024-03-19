@@ -21,6 +21,7 @@ packaging==24.0
 pandas==2.2.1
 pillow==10.2.0
 pydantic==2.6.3
+pydantic-settings==2.2.1
 pydantic_core==2.16.3
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0

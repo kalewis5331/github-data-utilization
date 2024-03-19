@@ -3,5 +3,5 @@ services:
     build: .
     container_name: github-data-utilization
     ports:
-      - ':8000:8000'
+      - ':8000:8080'
     restart: "no"
