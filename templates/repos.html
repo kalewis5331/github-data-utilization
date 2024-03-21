@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{#{% block title %}Child Page{% endblock %}#}
+
+{% block content %}
+    <h1>GitHub Repositories</h1>
+    <p>Check out my GitHub Repositories and some of the languages I've utilized. </p>
+    <div style="margin-bottom: 25px;   border-top: 1px solid gray; ">
+        {% for repo in repos %}
+            <div style="margin-bottom: 25px; border-bottom: 1px solid gray;">
+                <h2>{{ repo.name }}</h2>
+                <p><b>Primary Language: </b>{{ repo.language }}</p>
+                <p><b>Description:</b> {{ repo.description }} </p>
+                <p><b>Visibility: </b>{{ repo.visibility }}</p>
+                {% if repo.private %}
+                    <p>Language Utilization Unavailable</p>
+                {% else %}
+                    <p><a
+                            href="/repositories/{{ repo.id }}"
+                    >Language Utilization</a></p>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}

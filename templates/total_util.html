@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Languages Used{% endblock %}
+
+{% block content %}
+    <div style="text-align: center">
+        {% if repo_name %}
+            <h1>{{ repo_name }}</h1>
+            <img src="../static/images/repo.png" alt="Example Image">
+        {% else %}
+            <h1>Error Loading Repository</h1>
+        {% endif %}
+    </div>
+
+{% endblock %}
