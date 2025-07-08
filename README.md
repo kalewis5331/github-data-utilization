@@ -6,3 +6,9 @@ A project that visualizes the total utilization of coding languages throughout m
 
     python -m pip install -r requirements.txt
     uvicorn main:app --reload --proxy-headers --host 0.0.0.0 --port 8000
+
+# Deploy App
+
+    fly auth login
+    fly deploy --build-only
+    fly deploy
