@@ -35,11 +35,11 @@ async def create_bar_chart():
     """
     url = 'https://kalewis5331.com/api/graphql'
     r = httpx.post(url, json={"query": query})
+    data = r.json()["data"]
+    repos = data["repos"]
     status = r.status_code
-    if status == 200:
-        data = r.json()["data"]
-        repos = data["repos"]
-        df = pd.DataFrame(repos)
+    df = pd.DataFrame(repos)
+    if status == 200 and not df.empty:
         total_items = len(df)
         df_count = df.groupby('language').size().reset_index(name='count')
         df_count['percentage'] = (df_count['count'] / total_items) * 100
